@@ -1,6 +1,8 @@
-import Titulo from './commponents/Titulo';
-import Parrafo from './commponents/Parrafo';
-import Imagen from './commponents/Imagen';
+import Titulo from './components/Titulo';
+import Parrafo from './components/Parrafo';
+import Imagen from './components/Imagen';
+import Contador from './components/Contador';
+import CambiarFondo from './components/CambiarFondo';
 
 export default function Home() {
   return (
@@ -19,11 +21,16 @@ export default function Home() {
 
       <Imagen
       src=" src\img.png"
+      src2=" src\image.png"
       ancho="400px"
       borde="10px"
       posicion="block"
       margen="0 auto"
       ></Imagen>
+
+      <Contador button="Contador"></Contador>
+
+      <CambiarFondo />  
     </main>
       
     
