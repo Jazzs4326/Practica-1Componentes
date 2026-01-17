@@ -3,6 +3,9 @@ import Parrafo from './components/Parrafo';
 import Imagen from './components/Imagen';
 import Contador from './components/Contador';
 import CambiarFondo from './components/CambiarFondo';
+import {Toast} from './components/Toast';
+import Modal from './components/Modal';
+
 
 export default function Home() {
   return (
@@ -28,9 +31,13 @@ export default function Home() {
       margen="0 auto"
       ></Imagen>
 
-      <Contador button="Contador"></Contador>
+      <Contador button="Contador" posicion="center"></Contador>
 
-      <CambiarFondo />  
+      <CambiarFondo color1="#b5f0c4" color2="#facff4" />  
+
+      <Toast color="danger" colorAlert="danger"></Toast>
+
+      <Modal></Modal>
     </main>
       
     

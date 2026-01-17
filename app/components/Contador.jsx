@@ -1,25 +1,19 @@
 "use client";
 import { useState } from "react";
+import { Button } from "reactstrap";
 
-export default function Contador({ button }) {
+export default function Contador({ button, posicion }) {
   const [contador, setContador] = useState(0);
 
   return (
-    <div>
+    <div style={{ textAlign: posicion, margin: "20px" }}>
       <p>Contador: {contador}</p>
 
-      <button
-        style={{
-          backgroundColor: "#6497daac",
-          borderRadius: "6px",
-          padding: "8px 12px",
-          cursor: "pointer",
-          display: "block",
-        }}
+      <Button 
         onClick={() => setContador(contador + 1)}
       >
         {button}
-      </button>
+      </Button>
     </div>
   );
 }

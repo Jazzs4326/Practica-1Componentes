@@ -1,8 +1,13 @@
 "use client";
 import { useState } from "react";
+import { Button } from "reactstrap";
 
 export default function Imagen({ src, src2, ancho, borde, posicion, margen }) {
   const [imagenActual, setImagenActual] = useState(src);
+
+  const cambiarImagen = () => {
+    setImagenActual(imagenActual === src ? src2 : src);
+  }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -16,19 +21,11 @@ export default function Imagen({ src, src2, ancho, borde, posicion, margen }) {
         }}
       />
 
-      <button
-        onClick={() => setImagenActual(src2)}
-            style={{
-          backgroundColor: "#f195defd",
-          borderRadius: "6px",
-          padding: "8px 12px",
-          cursor: "pointer",
-          display: "block",
-          margin: "12px auto 0 auto"
-        }}
+      <Button
+        onClick={cambiarImagen}
       >
         Cambiar imagen
-      </button>
+      </Button>
     </div>
   );
 }

@@ -1,29 +1,22 @@
 "use client";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Button } from "reactstrap";
 
-export default function CambiarFondo() {
-  const [color, setColor] = useState("#ffffff");
+export default function CambiarFondo({ color1, color2 }) {
+  const [color, setColor] = useState(color1);
 
   useEffect(() => {
     document.body.style.backgroundColor = color;
   }, [color]);
 
   return (
-   
-      <button
-        style={{
-          backgroundColor: "#f195defd",
-          borderRadius: "6px",
-          padding: "8px 12px",
-          cursor: "pointer",
-          display: "block",
-          margin: "12px auto 0 auto"
-        }}
-        onClick={() => setColor(color === "#ffffff" ? "#add8e6" : "#ffffff")}
+    <div style={{ textAlign: "center", margin: "20px" }}>
+      <Button
+        onClick={() => setColor(color === color1 ? color2 : color1)}
       >
         Cambiar color de fondo
-      </button>
-    
+      </Button>
+    </div>
   );
 }
