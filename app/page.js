@@ -5,6 +5,7 @@ import Contador from './components/Contador';
 import CambiarFondo from './components/CambiarFondo';
 import {Toast} from './components/Toast';
 import Modal from './components/Modal';
+import Tabla from './components/Tabla';
 
 
 export default function Home() {
@@ -38,6 +39,8 @@ export default function Home() {
       <Toast color="danger" colorAlert="danger"></Toast>
 
       <Modal></Modal>
+      
+      <Tabla></Tabla>
     </main>
       
     
