@@ -6,6 +6,7 @@ import CambiarFondo from './components/CambiarFondo';
 import {Toast} from './components/Toast';
 import Modal from './components/Modal';
 import Tabla from './components/Tabla';
+import Formulario from './formulario/page';
 
 
 export default function Home() {
@@ -41,6 +42,8 @@ export default function Home() {
       <Modal></Modal>
       
       <Tabla></Tabla>
+
+      <Formulario></Formulario>
     </main>
       
     
