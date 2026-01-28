@@ -7,6 +7,7 @@ import {Toast} from './components/Toast';
 import Modal from './components/Modal';
 import Tabla from './components/Tabla';
 import Formulario from './formulario/page';
+import Api from './components/Api';
 
 
 export default function Home() {
@@ -44,6 +45,8 @@ export default function Home() {
       <Tabla></Tabla>
 
       <Formulario></Formulario>
+
+      <Api></Api>
     </main>
       
     
