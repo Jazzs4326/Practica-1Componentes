@@ -6,7 +6,6 @@ import { Button } from "reactstrap";
 
 export function Toast(color, colorAlert) {
   const [isVisible, setIsVisible] = useState(false);
-
   const visible = () => setIsVisible(true);
   
   setTimeout(() => {

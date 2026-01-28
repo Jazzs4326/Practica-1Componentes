@@ -1,6 +1,7 @@
 "use client";
-import {Form,FormGroup,Label,Input,Button,Modal,ModalHeader,ModalBody,FormFeedback,} from "reactstrap";
+import {Form,FormGroup,Label,Input,Button,Modal,ModalHeader,ModalBody,FormFeedback,Table,} from "reactstrap";
 import { useState } from "react";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Formulario() {
   const initialFormData = {
@@ -19,6 +20,9 @@ export default function Formulario() {
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+  const [registros, setRegistros] = useState([]);
+  const [modalEditarOpen, setModalEditarOpen] = useState(false);
+  const [registroEditando, setRegistroEditando] = useState(null);
 
   const validateField = (name, value) => {
     let error = "";
@@ -36,7 +40,7 @@ export default function Formulario() {
         }
         break;
       case "edad":
-        if (!/^\d+$/.test(value) || value < 0 || value > 120) {
+        if (!/^\d+$/.test(value) || value < 0 || value > 100) {
           error = "Edad inválida";
         }
         break;
@@ -65,10 +69,12 @@ export default function Formulario() {
       [name]: errorMessage,
     });
   };
+
   const handleReset = () => {
     setFormData(initialFormData);
     setErrors({});
   };
+
   const toggleModal = () => {
     let newErrors = {};
 
@@ -84,6 +90,43 @@ export default function Formulario() {
     if (Object.keys(newErrors).length === 0) {
       setModalOpen(!modalOpen);
     }
+  };
+
+  const handleGuardar = () => {
+    let newErrors = {};
+
+    Object.keys(formData).forEach((field) => {
+      const error = validateField(field, formData[field]);
+      if (error) {
+        newErrors[field] = error;
+      }
+    });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      setRegistros([...registros, formData]);
+      setFormData(initialFormData);
+    }
+  };
+
+  const handleEliminar = (indexEliminar) => {
+    const nuevosRegistros = registros.filter(
+      (_, index) => index !== indexEliminar,
+    );
+    setRegistros(nuevosRegistros);
+  };
+
+  const handleEditar = (registro, index) => {
+    setRegistroEditando({ ...registro, index });
+    setModalEditarOpen(true);
+  };
+
+  const handleGuardarEdicion = () => {
+    const nuevosRegistros = [...registros];
+    nuevosRegistros[registroEditando.index] = registroEditando;
+    setRegistros(nuevosRegistros);
+    setModalEditarOpen(false);
   };
 
   const titleStyle = { textAlign: "center", margin: "20px" };
@@ -236,6 +279,14 @@ export default function Formulario() {
           Mostrar
         </Button>
         <Button
+          color="success"
+          type="button"
+          onClick={handleGuardar}
+          style={{ marginLeft: "10px" }}
+        >
+          Guardar
+        </Button>
+        <Button
           color="secondary"
           type="button"
           onClick={handleReset}
@@ -277,6 +328,198 @@ export default function Formulario() {
           </p>
         </ModalBody>
       </Modal>
+      <Modal isOpen={modalEditarOpen} toggle={() => setModalEditarOpen(false)}>
+        <ModalHeader toggle={() => setModalEditarOpen(false)}>
+          Editar Registro
+        </ModalHeader>
+
+        <ModalBody>
+          <FormGroup>
+            <Label>Nombre</Label>
+            <Input
+              value={registroEditando?.nombre || ""}
+              onChange={(e) =>
+                setRegistroEditando({
+                  ...registroEditando,
+                  nombre: e.target.value,
+                })
+              }
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Apellido</Label>
+            <Input
+              value={registroEditando?.apellido || ""}
+              onChange={(e) =>
+                setRegistroEditando({
+                  ...registroEditando,
+                  apellido: e.target.value,
+                })
+              }
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Email</Label>
+            <Input
+              value={registroEditando?.email || ""}
+              onChange={(e) =>
+                setRegistroEditando({
+                  ...registroEditando,
+                  email: e.target.value,
+                })
+              }
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Edad</Label>
+            <Input
+              type="number"
+              value={registroEditando?.edad || ""}
+              onChange={(e) =>
+                setRegistroEditando({
+                  ...registroEditando,
+                  edad: e.target.value,
+                })
+              }
+            />
+          </FormGroup>
+
+          <FormGroup tag="fieldset">
+            <legend>Género</legend>
+
+            <FormGroup check>
+              <Input
+                type="radio"
+                name="generoEditar"
+                value="masculino"
+                checked={registroEditando?.genero === "masculino"}
+                onChange={(e) =>
+                  setRegistroEditando({
+                    ...registroEditando,
+                    genero: e.target.value,
+                  })
+                }
+              />
+              <Label check>Masculino</Label>
+            </FormGroup>
+
+            <FormGroup check>
+              <Input
+                type="radio"
+                name="generoEditar"
+                value="femenino"
+                checked={registroEditando?.genero === "femenino"}
+                onChange={(e) =>
+                  setRegistroEditando({
+                    ...registroEditando,
+                    genero: e.target.value,
+                  })
+                }
+              />
+              <Label check>Femenino</Label>
+            </FormGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Rol</Label>
+            <Input
+              type="select"
+              value={registroEditando?.rol || ""}
+              onChange={(e) =>
+                setRegistroEditando({
+                  ...registroEditando,
+                  rol: e.target.value,
+                })
+              }
+            >
+              <option value="">Selecciona un rol</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Input>
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Fecha de registro</Label>
+            <Input
+              type="date"
+              value={registroEditando?.fechaRegistro || ""}
+              onChange={(e) =>
+                setRegistroEditando({
+                  ...registroEditando,
+                  fechaRegistro: e.target.value,
+                })
+              }
+            />
+          </FormGroup>
+
+          <Button color="success" onClick={handleGuardarEdicion}>
+            Guardar cambios
+          </Button>
+        </ModalBody>
+      </Modal>
+
+      {registros.length > 0 && (
+        <div style={{ marginTop: "40px" }}>
+          <h3>Registros Guardados</h3>
+
+          <Table bordered hover responsive>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Rol</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {registros.map((registro, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{registro.nombre}</td>
+                  <td>{registro.apellido}</td>
+                  <td>{registro.email}</td>
+                  <td>{registro.edad}</td>
+                  <td>{registro.genero}</td>
+                  <td>{registro.rol}</td>
+                  <td>{registro.fechaRegistro}</td>
+                  <td>
+                    {}
+                    <Button
+                      color="warning"
+                      size="sm"
+                      style={{ marginRight: "5px" }}
+                      onClick={() => handleEditar(registro, index)}
+                      title="Editar"
+                    >
+                      <i className="fa-solid fa-pen"></i>
+                    </Button>
+
+                    {}
+                    <Button
+                      color="danger"
+                      size="sm"
+                      onClick={() => handleEliminar(index)}
+                      title="Eliminar"
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </main>
   );
 }
