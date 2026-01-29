@@ -1,12 +1,5 @@
 "use client";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardText,
-  CardFooter,
-  Button,
-} from "reactstrap";
+import {Card,CardHeader,CardBody,CardText,CardFooter,Button,} from "reactstrap";
 import React, { useState } from "react";
 
 export default function Api() {

@@ -8,6 +8,7 @@ import Modal from './components/Modal';
 import Tabla from './components/Tabla';
 import Formulario from './formulario/page';
 import Api from './components/Api';
+import Productos from './components/Productos';
 
 
 export default function Home() {
@@ -47,6 +48,8 @@ export default function Home() {
       <Formulario></Formulario>
 
       <Api></Api>
+
+        <Productos></Productos>
     </main>
       
     
